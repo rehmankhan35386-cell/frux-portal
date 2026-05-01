@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FRUX | OFFICIAL HUB</title>
     <style>
+        /* TERA ORIGINAL COLOR PALETTE */
         :root {
             --bg: #020617;
             --card: rgba(15, 23, 42, 0.9);
             --cyan: #22d3ee;
             --purple: #a855f7;
             --green: #10b981;
+            --red: #ef4444;
             --text: #f8fafc;
             --muted: #94a3b8;
         }
@@ -18,36 +20,51 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; overflow: hidden; }
 
+        /* TERA STAR ANIMATION CONTAINER */
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
 
         .viewport { width: 100%; max-width: 420px; text-align: center; position: relative; z-index: 1; }
+        
+        /* TERA LOGO STYLING */
         .logo { font-size: 50px; font-weight: 900; color: var(--cyan); text-shadow: 0 0 20px rgba(34, 211, 238, 0.5); margin-bottom: 5px; }
         .tagline { font-size: 10px; color: var(--muted); letter-spacing: 5px; text-transform: uppercase; margin-bottom: 40px; }
 
         #menu-screen { display: grid; gap: 20px; animation: fadeIn 0.5s ease; }
-        .card { background: var(--card); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 25px; cursor: pointer; transition: 0.3s; border-left: 5px solid var(--cyan); text-align: left; backdrop-filter: blur(10px); }
-        .card:hover { transform: translateY(-5px); border-color: var(--cyan); }
+        
+        /* TERE CARDS KA DESIGN */
+        .card { 
+            background: var(--card); 
+            border: 1px solid rgba(255,255,255,0.05); 
+            border-radius: 20px; 
+            padding: 25px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            border-left: 5px solid var(--cyan); 
+            text-align: left; 
+            backdrop-filter: blur(10px); 
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--cyan); box-shadow: 0 0 20px rgba(34, 211, 238, 0.2); }
         .card h3 { color: var(--cyan); margin-bottom: 8px; font-size: 20px; }
         .card p { font-size: 13px; color: var(--muted); line-height: 1.4; }
 
         .screen { display: none; width: 100%; animation: slideIn 0.4s ease; }
-        .input-box { width: 100%; padding: 18px; background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; color: #fff; font-size: 16px; margin-bottom: 15px; outline: none; }
-        .input-box:focus { border-color: var(--cyan); }
+        
+        /* TERA INPUT BOX DESIGN */
+        .input-box { width: 100%; padding: 18px; background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; color: #fff; font-size: 16px; margin-bottom: 15px; outline: none; transition: 0.3s; }
+        .input-box:focus { border-color: var(--cyan); box-shadow: 0 0 10px rgba(34, 211, 238, 0.3); }
         
         .btn { width: 100%; padding: 18px; border: none; border-radius: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.3s; font-size: 14px; margin-bottom: 10px; }
         .btn-primary { background: var(--cyan); color: var(--bg); }
         .btn-purple { background: var(--purple); color: #fff; }
-        .btn-outline { background: transparent; border: 1px solid var(--muted); color: var(--muted); margin-top: 20px; }
+        .btn-outline { background: transparent; border: 1px solid var(--muted); color: var(--muted); margin-top: 10px; }
 
-        #loading { display: none; margin-top: 20px; color: var(--cyan); font-weight: bold; text-shadow: 0 0 10px var(--cyan); }
-        .result-box { display: none; background: var(--card); border-radius: 20px; padding: 25px; text-align: left; border-left: 5px solid var(--purple); margin-top: 20px; backdrop-filter: blur(15px); max-height: 400px; overflow-y: auto; }
+        #loading { display: none; margin-top: 20px; color: var(--cyan); font-weight: bold; text-shadow: 0 0 10px var(--cyan); letter-spacing: 2px; }
+        
+        /* TERA RESULT VIEW */
+        .result-box { display: none; background: var(--card); border-radius: 20px; padding: 25px; text-align: left; border-left: 5px solid var(--purple); margin-top: 20px; backdrop-filter: blur(15px); }
         .data-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .data-label { color: var(--muted); font-size: 11px; text-transform: uppercase; }
+        .data-label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
         .data-val { font-weight: bold; color: #fff; word-break: break-all; }
-
-        /* SCROLLBAR FOR RESULTS */
-        .result-box::-webkit-scrollbar { width: 5px; }
-        .result-box::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 10px; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
@@ -63,44 +80,45 @@
 
     <div id="menu-screen">
         <div class="card" onclick="openScreen('uid-screen')">
-            <h3>Full Inventory Check</h3>
-            <p>Get IGN, Level, Clothes & Item details (No Ads).</p>
+            <h3>UID Inventory Scan</h3>
+            <p>Fetch Player Details & Items (Bypass Ads).</p>
         </div>
         <div class="card" style="border-left-color: var(--purple);" onclick="openScreen('scan-screen')">
             <h3>Token Deep Scan</h3>
-            <p>Analyze Garena Bind status, Email change & Timers.</p>
+            <p>Analyze Garena Security, Binds & Countdown.</p>
         </div>
     </div>
 
     <div id="uid-screen" class="screen">
         <input type="number" id="uid-input" class="input-box" placeholder="Enter Game UID...">
-        <button class="btn btn-primary" onclick="runAction('uid')">Bypass & Fetch Info</button>
+        <button class="btn btn-primary" onclick="runAction('uid')">Start Bypass Scan</button>
         <button class="btn btn-outline" onclick="goHome()">Back to Menu</button>
     </div>
 
     <div id="scan-screen" class="screen">
         <input type="text" id="tk-input" class="input-box" placeholder="Paste Access Token...">
-        <button class="btn btn-purple" onclick="runAction('scan')">Deep Scan Token</button>
+        <button class="btn btn-purple" onclick="runAction('scan')">Deep Analyze Token</button>
         <button class="btn btn-outline" onclick="goHome()">Back to Menu</button>
     </div>
 
-    <div id="loading">BYPASSING SECURITY...</div>
+    <div id="loading">FRUX: BYPASSING AD-GATE...</div>
 
     <div id="result-view" class="result-box">
         <div id="res-content"></div>
-        <button class="btn btn-outline" onclick="goHome()" style="width:100%">New Scan</button>
+        <button class="btn btn-outline" onclick="goHome()" style="width:100%">Scan Another</button>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
+    /* TERA STAR ANIMATION CONFIG */
     particlesJS("particles-js", {
       "particles": {
-        "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+        "number": { "value": 90, "density": { "enable": true, "value_area": 800 } },
         "color": { "value": "#ffffff" },
         "opacity": { "value": 0.5, "random": true },
         "size": { "value": 2, "random": true },
-        "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "out_mode": "out" }
+        "move": { "enable": true, "speed": 1.2, "direction": "none", "random": true, "out_mode": "out" }
       }
     });
 
@@ -114,15 +132,17 @@
         document.getElementById('menu-screen').style.display = 'grid';
     }
 
+    /* TERA LOGIC WITH BYPASS RULES */
     async function runAction(type) {
         const val = type === 'uid' ? document.getElementById('uid-input').value : document.getElementById('tk-input').value;
-        if(!val) return alert("Input dalo bhai!");
+        if(!val) return;
 
         document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
         document.getElementById('loading').style.display = 'block';
 
         try {
-            let url = type === 'uid' ? `/ff-api/info?uid=${val}` : `/garena-api/game/account_security/bind:get_bind_info?app_id=100067&access_token=${val}`;
+            // Rule Based URLs (Jo tere _redirects mein hain)
+            let url = (type === 'uid') ? `/ff-info/info?uid=${val}` : `/api/game/account_security/bind:get_bind_info?app_id=100067&access_token=${val}`;
             
             const res = await fetch(url);
             const data = await res.json();
@@ -130,30 +150,24 @@
             let html = "";
             if(type === 'uid') {
                 html = `
-                    <div class="data-row"><span class="data-label">IGN</span><span class="data-val">${data.nickname || 'Unknown'}</span></div>
-                    <div class="data-row"><span class="data-label">Level</span><span class="data-val">${data.level || '0'}</span></div>
-                    <div class="data-row"><span class="data-label">Region</span><span class="data-val">${data.region || '??'}</span></div>
-                    <div class="data-row"><span class="data-label">Likes</span><span class="data-val">${data.likes || '0'}</span></div>
-                    <div style="margin-top:15px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;">
-                        <p style="font-size:10px; color:var(--cyan)">EQUIPPED ITEMS</p>
-                        <div style="font-size:11px; color:var(--muted); margin-top:5px;">Check console for full list...</div>
-                    </div>
+                    <div class="data-row"><span class="data-label">PLAYER</span><span class="data-val">${data.nickname || 'Unknown'}</span></div>
+                    <div class="data-row"><span class="data-label">LEVEL</span><span class="data-val">${data.level || '0'}</span></div>
+                    <div class="data-row"><span class="data-label">REGION</span><span class="data-val">${data.region || '??'}</span></div>
+                    <div style="margin-top:10px; color:var(--cyan); font-size:10px; text-align:center;">INVENTORY BYPASS ACTIVE [✓]</div>
                 `;
             } else {
-                const current = data.email || "No Email";
+                const current = data.email || "None";
                 const pending = data.email_to_be_bind || data.email_to_be || null;
                 const timer = data.request_exec_countdown || 0;
-                html = `<div class="data-row"><span class="data-label">Current</span><span class="data-val">${current}</span></div>`;
+                html = `<div class="data-row"><span class="data-label">LINKED</span><span class="data-val">${current}</span></div>`;
                 if(pending) {
-                    html += `<div class="data-row" style="color:var(--cyan)"><span class="data-label">Pending</span><span class="data-val">${pending}</span></div>
-                             <div class="data-row" style="color:var(--red)"><span class="data-label">Timer</span><span class="data-val">${timer}s</span></div>`;
-                } else {
-                    html += `<div class="data-row"><span class="data-label">Status</span><span class="data-val" style="color:var(--green)">SECURE</span></div>`;
+                    html += `<div class="data-row" style="color:var(--cyan)"><span class="data-label">PENDING</span><span class="data-val">${pending}</span></div>
+                             <div class="data-row" style="color:var(--red)"><span class="data-label">TIMER</span><span class="data-val">${timer}s</span></div>`;
                 }
             }
             showResult(html);
         } catch (err) {
-            alert("Error! _redirects file check karo GitHub par.");
+            alert("Check _redirects file!");
             goHome();
         }
     }
@@ -164,6 +178,5 @@
         document.getElementById('result-view').style.display = 'block';
     }
 </script>
-
 </body>
 </html>
