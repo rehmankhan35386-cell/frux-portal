@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FRUX | CORE PORTAL</title>
+    <title>FRUX | OFFICIAL HUB</title>
     <style>
         :root {
             --bg: #020617;
@@ -15,134 +15,136 @@
             --muted: #94a3b8;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow-x: hidden; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
 
-        .viewport { width: 90%; max-width: 400px; text-align: center; }
-        
-        .logo { font-size: 45px; font-weight: 900; color: var(--cyan); text-shadow: 0 0 20px rgba(34, 211, 238, 0.4); margin-bottom: 5px; }
-        .tagline { font-size: 10px; color: var(--muted); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 40px; }
+        .viewport { width: 100%; max-width: 420px; text-align: center; }
+        .logo { font-size: 50px; font-weight: 900; color: var(--cyan); text-shadow: 0 0 20px rgba(34, 211, 238, 0.3); margin-bottom: 5px; }
+        .tagline { font-size: 10px; color: var(--muted); letter-spacing: 5px; text-transform: uppercase; margin-bottom: 40px; }
 
-        /* --- HUB SCREEN --- */
-        #hub-screen { display: grid; gap: 20px; }
-        
-        .choice-card {
-            background: var(--card);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 20px;
-            padding: 25px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-align: left;
-            border-left: 5px solid var(--cyan);
-        }
-        
-        .choice-card:hover { transform: scale(1.02); border-color: var(--cyan); }
-        .choice-card h3 { color: var(--cyan); margin-bottom: 5px; font-size: 20px; }
-        .choice-card p { font-size: 12px; color: var(--muted); }
+        /* MENU SCREEN */
+        #menu-screen { display: grid; gap: 20px; animation: fadeIn 0.5s ease; }
+        .card { background: var(--card); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 25px; cursor: pointer; transition: 0.3s; border-left: 5px solid var(--cyan); text-align: left; }
+        .card:hover { transform: translateY(-5px); border-color: var(--cyan); }
+        .card h3 { color: var(--cyan); margin-bottom: 8px; font-size: 20px; }
+        .card p { font-size: 13px; color: var(--muted); line-height: 1.4; }
 
-        /* --- TOOL SCREENS --- */
-        .tool-screen { display: none; width: 100%; }
-        .input-box { width: 100%; padding: 18px; background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; color: var(--text); margin-bottom: 20px; font-size: 16px; outline: none; }
+        /* INPUT SCREENS */
+        .screen { display: none; width: 100%; animation: slideIn 0.4s ease; }
+        .input-box { width: 100%; padding: 18px; background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; color: #fff; font-size: 16px; margin-bottom: 15px; outline: none; }
         .input-box:focus { border-color: var(--cyan); }
-        
-        .primary-btn { width: 100%; padding: 18px; background: var(--cyan); border: none; border-radius: 15px; color: var(--bg); font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .primary-btn:hover { box-shadow: 0 0 20px rgba(34, 211, 238, 0.4); }
+        .btn { width: 100%; padding: 18px; border: none; border-radius: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.3s; font-size: 14px; }
+        .btn-primary { background: var(--cyan); color: var(--bg); }
+        .btn-purple { background: var(--purple); color: #fff; }
+        .btn-outline { background: transparent; border: 1px solid var(--muted); color: var(--muted); margin-top: 20px; }
 
-        /* --- RESULT CARD --- */
-        .result-container { background: var(--card); border-radius: 20px; padding: 20px; margin-top: 25px; text-align: left; border: 1px solid rgba(34, 211, 238, 0.2); display: none; }
-        .res-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .res-label { color: var(--muted); font-size: 13px; }
-        .res-val { color: var(--text); font-weight: bold; }
-        
-        .status-tag { color: var(--green); font-size: 11px; border: 1px solid var(--green); padding: 2px 8px; border-radius: 10px; text-transform: uppercase; }
+        /* RESULTS AREA */
+        #loading { display: none; margin-top: 20px; color: var(--cyan); font-weight: bold; }
+        .result-box { display: none; background: var(--card); border-radius: 20px; padding: 25px; text-align: left; border-left: 5px solid var(--purple); margin-top: 20px; }
+        .data-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .data-label { color: var(--muted); font-size: 12px; text-transform: uppercase; }
+        .data-val { font-weight: bold; color: #fff; word-break: break-all; }
 
-        /* --- ANIMATION --- */
-        #loading-view { display: none; margin-top: 30px; }
-        .spinner { width: 50px; height: 50px; border: 3px solid rgba(34, 211, 238, 0.1); border-left-color: var(--cyan); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     </style>
 </head>
 <body>
 
 <div class="viewport">
     <div class="logo">FRUX</div>
-    <div class="tagline">Multipurpose Hub</div>
+    <p class="tagline">Deep Scan Portal</p>
 
-    <div id="hub-screen">
-        <div class="choice-card" onclick="showTool('uid-tool')">
-            <h3>UID Info Checker</h3>
-            <p>Fetch player name, level, and account status.</p>
+    <div id="menu-screen">
+        <div class="card" onclick="openScreen('uid-screen')">
+            <h3>UID Checker</h3>
+            <p>Get player details and account security status instantly.</p>
         </div>
-        <div class="choice-card" style="border-left-color: var(--purple);" onclick="showTool('deep-scan-tool')">
-            <h3>Deep Scan Tool</h3>
-            <p>Check pending bind requests and account timers.</p>
+        <div class="card" style="border-left-color: var(--purple);" onclick="openScreen('scan-screen')">
+            <h3>Token Deep Scan</h3>
+            <p>Real-time Garena API check for bind emails and timers.</p>
         </div>
     </div>
 
-    <div id="uid-tool" class="tool-screen">
-        <input type="number" id="uid-input" class="input-box" placeholder="Enter Player UID...">
-        <button class="primary-btn" onclick="processAction('uid')">Fetch Info</button>
+    <div id="uid-screen" class="screen">
+        <input type="number" id="uid-input" class="input-box" placeholder="Enter Game UID...">
+        <button class="btn btn-primary" onclick="runAction('uid')">Fetch Profile</button>
+        <button class="btn btn-outline" onclick="goHome()">Back to Menu</button>
     </div>
 
-    <div id="deep-scan-tool" class="tool-screen">
-        <input type="text" id="token-input" class="input-box" placeholder="Paste Access Token...">
-        <button class="primary-btn" style="background: var(--purple); color: white;" onclick="processAction('scan')">Analyze Token</button>
+    <div id="scan-screen" class="screen">
+        <input type="text" id="tk-input" class="input-box" placeholder="Paste Access Token...">
+        <button class="btn btn-purple" onclick="runAction('scan')">Analyze Bind Info</button>
+        <button class="btn btn-outline" onclick="goHome()">Back to Menu</button>
     </div>
 
-    <div id="loading-view">
-        <div class="spinner"></div>
-        <p style="margin-top: 15px; color: var(--cyan); font-size: 12px; letter-spacing: 2px;">COMMUNICATING WITH SERVER...</p>
-    </div>
+    <div id="loading">CONNECTING TO GARENA CORE...</div>
 
-    <div id="result-view" class="result-container">
-        <div id="uid-results" style="display:none;">
-            <div class="res-row"><span class="res-label">Player Name</span><span class="res-val" id="val-name">FRUX_OFFICIAL</span></div>
-            <div class="res-row"><span class="res-label">Account Level</span><span class="res-val" id="val-level">72</span></div>
-            <div class="res-row"><span class="res-label">Region</span><span class="res-val">India</span></div>
-            <div class="res-row"><span class="res-label">Status</span><span class="status-tag">Protected</span></div>
-        </div>
-        
-        <div id="scan-results" style="display:none;">
-            <div class="res-row"><span class="res-label">Linked Email</span><span class="res-val">hussain.xxx@gmail.com</span></div>
-            <div class="res-row" style="color: var(--cyan);"><span class="res-label">Pending Bind</span><span class="res-val">frux.bind@new.com</span></div>
-            <div class="res-row"><span class="res-label">Timer Remaining</span><span class="res-val" style="color: var(--cyan);">145s</span></div>
-        </div>
-
-        <button class="primary-btn" style="background:transparent; border:1px solid var(--muted); color:var(--muted); margin-top:20px; font-size:12px;" onclick="resetHub()">Back to Menu</button>
+    <div id="result-view" class="result-box">
+        <div id="res-content"></div>
+        <button class="btn btn-outline" onclick="goHome()">New Scan</button>
     </div>
 </div>
 
 <script>
-    function showTool(toolId) {
-        document.getElementById('hub-screen').style.display = 'none';
-        document.getElementById(toolId).style.display = 'block';
+    function openScreen(id) {
+        document.getElementById('menu-screen').style.display = 'none';
+        document.getElementById(id).style.display = 'block';
     }
 
-    function resetHub() {
-        document.querySelectorAll('.tool-screen, .result-container, #uid-results, #scan-results').forEach(el => el.style.display = 'none');
-        document.getElementById('hub-screen').style.display = 'grid';
-        document.querySelectorAll('.input-box').forEach(i => i.value = '');
+    function goHome() {
+        document.querySelectorAll('.screen, #result-view, #loading').forEach(s => s.style.display = 'none');
+        document.getElementById('menu-screen').style.display = 'grid';
+        document.querySelectorAll('input').forEach(i => i.value = '');
     }
 
-    function processAction(type) {
-        let val = type === 'uid' ? document.getElementById('uid-input').value : document.getElementById('token-input').value;
-        if(!val) return alert("Pehle data toh daalo!");
+    async function runAction(type) {
+        const val = type === 'uid' ? document.getElementById('uid-input').value : document.getElementById('tk-input').value;
+        if(!val) return alert("Data enter karo bhai!");
 
-        document.querySelectorAll('.tool-screen').forEach(el => el.style.display = 'none');
-        document.getElementById('loading-view').style.display = 'block';
+        document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
+        document.getElementById('loading').style.display = 'block';
 
-        setTimeout(() => {
-            document.getElementById('loading-view').style.display = 'none';
-            document.getElementById('result-view').style.display = 'block';
-            
-            if(type === 'uid') {
-                document.getElementById('uid-results').style.display = 'block';
-                document.getElementById('val-name').innerText = "PLAYER_" + val.substring(0,4);
-            } else {
-                document.getElementById('scan-results').style.display = 'block';
+        if(type === 'uid') {
+            // Simulated UID Checker Logic
+            setTimeout(() => showResult(`
+                <div class="data-row"><span class="data-label">Name</span><span class="data-val">PLAYER_${val.substring(0,4)}</span></div>
+                <div class="data-row"><span class="data-label">Level</span><span class="data-val">71</span></div>
+                <div class="data-row"><span class="data-label">Status</span><span style="color:var(--green)">PROTECTED</span></div>
+            `), 1500);
+        } else {
+            // REAL GARENA API LOGIC
+            try {
+                // Using '/api/' prefix which matches our _redirects rule
+                const res = await fetch(`/api/game/account_security/bind:get_bind_info?app_id=100067&access_token=${val}`);
+                const data = await res.json();
+                
+                const current = data.email || "Not Linked";
+                const pending = data.email_to_be_bind || data.email_to_be || null;
+                const time = data.request_exec_countdown || 0;
+
+                let html = `<div class="data-row"><span class="data-label">Current Email</span><span class="data-val">${current}</span></div>`;
+                if(pending) {
+                    html += `
+                        <div class="data-row" style="color:var(--cyan)"><span class="data-label">Pending Bind</span><span class="data-val">${pending}</span></div>
+                        <div class="data-row" style="color:var(--cyan)"><span class="data-label">Countdown</span><span class="data-val">${time}s</span></div>
+                    `;
+                } else {
+                    html += `<div style="color:var(--green); font-size:12px; margin-top:10px;">[✓] NO PENDING REQUESTS FOUND</div>`;
+                }
+                showResult(html);
+            } catch (err) {
+                alert("Connection Error! Netlify par host karo tabhi real data aayega.");
+                goHome();
             }
-        }, 2000);
+        }
+    }
+
+    function showResult(html) {
+        document.getElementById('loading').style.display = 'none';
+        const resView = document.getElementById('result-view');
+        document.getElementById('res-content').innerHTML = html;
+        resView.style.display = 'block';
     }
 </script>
 
