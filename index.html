@@ -3,179 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FRUX | OFFICIAL HUB</title>
+    <title>FRUX | ULTRA MAX TERMINAL</title>
     <style>
-        /* TERA ORIGINAL COLOR PALETTE */
         :root {
-            --bg: #020617;
-            --card: rgba(15, 23, 42, 0.9);
-            --cyan: #22d3ee;
-            --purple: #a855f7;
-            --green: #10b981;
-            --red: #ef4444;
-            --text: #f8fafc;
-            --muted: #94a3b8;
+            --bg: #010409;
+            --cyan: #00f3ff;
+            --purple: #bc13fe;
+            --red: #ff003c;
+            --green: #00ff9d;
+            --glass: rgba(15, 23, 42, 0.9);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; overflow: hidden; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Consolas', 'Courier New', monospace; }
+        
+        body { background-color: var(--bg); color: #fff; min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
 
-        /* TERA STAR ANIMATION CONTAINER */
+        /* ULTRA BACKGROUND */
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
 
-        .viewport { width: 100%; max-width: 420px; text-align: center; position: relative; z-index: 1; }
-        
-        /* TERA LOGO STYLING */
-        .logo { font-size: 50px; font-weight: 900; color: var(--cyan); text-shadow: 0 0 20px rgba(34, 211, 238, 0.5); margin-bottom: 5px; }
-        .tagline { font-size: 10px; color: var(--muted); letter-spacing: 5px; text-transform: uppercase; margin-bottom: 40px; }
-
-        #menu-screen { display: grid; gap: 20px; animation: fadeIn 0.5s ease; }
-        
-        /* TERE CARDS KA DESIGN */
-        .card { 
-            background: var(--card); 
-            border: 1px solid rgba(255,255,255,0.05); 
-            border-radius: 20px; 
-            padding: 25px; 
-            cursor: pointer; 
-            transition: 0.3s; 
-            border-left: 5px solid var(--cyan); 
-            text-align: left; 
-            backdrop-filter: blur(10px); 
+        .main-frame {
+            width: 100%;
+            max-width: 460px;
+            padding: 30px;
+            background: var(--glass);
+            border: 1px solid rgba(188, 19, 254, 0.4);
+            border-radius: 24px;
+            backdrop-filter: blur(25px);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(188, 19, 254, 0.1);
+            z-index: 10;
         }
-        .card:hover { transform: translateY(-5px); border-color: var(--cyan); box-shadow: 0 0 20px rgba(34, 211, 238, 0.2); }
-        .card h3 { color: var(--cyan); margin-bottom: 8px; font-size: 20px; }
-        .card p { font-size: 13px; color: var(--muted); line-height: 1.4; }
 
-        .screen { display: none; width: 100%; animation: slideIn 0.4s ease; }
-        
-        /* TERA INPUT BOX DESIGN */
-        .input-box { width: 100%; padding: 18px; background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; color: #fff; font-size: 16px; margin-bottom: 15px; outline: none; transition: 0.3s; }
-        .input-box:focus { border-color: var(--cyan); box-shadow: 0 0 10px rgba(34, 211, 238, 0.3); }
-        
-        .btn { width: 100%; padding: 18px; border: none; border-radius: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.3s; font-size: 14px; margin-bottom: 10px; }
-        .btn-primary { background: var(--cyan); color: var(--bg); }
-        .btn-purple { background: var(--purple); color: #fff; }
-        .btn-outline { background: transparent; border: 1px solid var(--muted); color: var(--muted); margin-top: 10px; }
+        .logo-text {
+            font-size: 55px;
+            font-weight: 900;
+            text-align: center;
+            background: linear-gradient(to bottom, var(--cyan), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(0, 243, 255, 0.4));
+            letter-spacing: 8px;
+            margin-bottom: 30px;
+        }
 
-        #loading { display: none; margin-top: 20px; color: var(--cyan); font-weight: bold; text-shadow: 0 0 10px var(--cyan); letter-spacing: 2px; }
-        
-        /* TERA RESULT VIEW */
-        .result-box { display: none; background: var(--card); border-radius: 20px; padding: 25px; text-align: left; border-left: 5px solid var(--purple); margin-top: 20px; backdrop-filter: blur(15px); }
-        .data-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .data-label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
-        .data-val { font-weight: bold; color: #fff; word-break: break-all; }
+        /* INPUT AREA */
+        .ultra-input {
+            width: 100%;
+            padding: 18px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--purple);
+            border-radius: 12px;
+            color: var(--cyan);
+            font-size: 14px;
+            outline: none;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+        .ultra-input:focus { border-color: var(--cyan); box-shadow: 0 0 15px rgba(0, 243, 255, 0.2); }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        /* BUTTONS */
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .neon-btn {
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        .btn-scan { background: var(--purple); color: #fff; box-shadow: 0 0 15px rgba(188, 19, 254, 0.4); }
+        .btn-cancel { background: var(--red); color: #fff; box-shadow: 0 0 15px rgba(255, 0, 60, 0.4); }
+        .neon-btn:hover { transform: translateY(-2px); filter: brightness(1.2); }
+
+        /* JSON OUTPUT BOX - AS REQUESTED */
+        #result-area { display: none; margin-top: 30px; animation: slideUp 0.5s ease; }
+        
+        .terminal-header {
+            font-size: 10px;
+            color: var(--muted);
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 5px;
+        }
+
+        .raw-json-box {
+            background: #000;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid var(--purple);
+            font-size: 12px;
+            line-height: 1.5;
+            color: #d1d5db;
+            text-align: left;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(188, 19, 254, 0.2);
+        }
+
+        /* JSON COLORING */
+        .j-key { color: var(--cyan); }
+        .j-val { color: #d2a8ff; }
+        .j-num { color: #ffa657; font-weight: bold; }
+        .j-bool { color: var(--red); font-weight: bold; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div id="particles-js"></div>
 
-<div class="viewport">
-    <div class="logo">FRUX</div>
-    <p class="tagline">Deep Scan Portal</p>
+<div class="main-frame">
+    <h1 class="logo-text">FRUX</h1>
 
-    <div id="menu-screen">
-        <div class="card" onclick="openScreen('uid-screen')">
-            <h3>UID Inventory Scan</h3>
-            <p>Fetch Player Details & Items (Bypass Ads).</p>
+    <input type="text" id="tk-input" class="ultra-input" placeholder="PASTE ACCESS_TOKEN">
+
+    <div class="btn-grid">
+        <button class="neon-btn btn-scan" onclick="runUltraAction('scan')">Deep Scan</button>
+        <button class="neon-btn btn-cancel" onclick="runUltraAction('cancel')">Cancel</button>
+    </div>
+
+    <div id="loading" style="display:none; margin-top: 25px; color: var(--cyan); text-align: center; font-size: 12px;">
+        [SYSTEM] SCANNING DATABASE...
+    </div>
+
+    <div id="result-area">
+        <div class="terminal-header">
+            <span>DATABASE_OUTPUT_LOG</span>
+            <span id="status-tag" style="color: var(--green);">[STABLE]</span>
         </div>
-        <div class="card" style="border-left-color: var(--purple);" onclick="openScreen('scan-screen')">
-            <h3>Token Deep Scan</h3>
-            <p>Analyze Garena Security, Binds & Countdown.</p>
+        
+        <div class="raw-json-box">
+            {<br>
+            &nbsp;&nbsp;<span class="j-key">"email"</span>: <span class="j-val" id="out-email">"..."</span>,<br>
+            &nbsp;&nbsp;<span class="j-key">"pending_request"</span>: <span class="j-val" id="out-pending">null</span>,<br>
+            &nbsp;&nbsp;<span class="j-key">"countdown_timer"</span>: <span class="j-num" id="out-timer">00</span>,<br>
+            &nbsp;&nbsp;<span class="j-key">"auth_status"</span>: <span class="j-val" id="out-auth">"READY"</span>,<br>
+            &nbsp;&nbsp;<span class="j-key">"is_secure"</span>: <span class="j-bool" id="out-secure">true</span><br>
+            }
         </div>
-    </div>
-
-    <div id="uid-screen" class="screen">
-        <input type="number" id="uid-input" class="input-box" placeholder="Enter Game UID...">
-        <button class="btn btn-primary" onclick="runAction('uid')">Start Bypass Scan</button>
-        <button class="btn btn-outline" onclick="goHome()">Back to Menu</button>
-    </div>
-
-    <div id="scan-screen" class="screen">
-        <input type="text" id="tk-input" class="input-box" placeholder="Paste Access Token...">
-        <button class="btn btn-purple" onclick="runAction('scan')">Deep Analyze Token</button>
-        <button class="btn btn-outline" onclick="goHome()">Back to Menu</button>
-    </div>
-
-    <div id="loading">FRUX: BYPASSING AD-GATE...</div>
-
-    <div id="result-view" class="result-box">
-        <div id="res-content"></div>
-        <button class="btn btn-outline" onclick="goHome()" style="width:100%">Scan Another</button>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-    /* TERA STAR ANIMATION CONFIG */
     particlesJS("particles-js", {
-      "particles": {
-        "number": { "value": 90, "density": { "enable": true, "value_area": 800 } },
-        "color": { "value": "#ffffff" },
-        "opacity": { "value": 0.5, "random": true },
-        "size": { "value": 2, "random": true },
-        "move": { "enable": true, "speed": 1.2, "direction": "none", "random": true, "out_mode": "out" }
-      }
+        "particles": {
+            "number": { "value": 100 },
+            "color": { "value": "#ffffff" },
+            "size": { "value": 1.5 },
+            "line_linked": { "enable": true, "distance": 120, "color": "#bc13fe", "opacity": 0.2 },
+            "move": { "enable": true, "speed": 1 }
+        }
     });
 
-    function openScreen(id) {
-        document.getElementById('menu-screen').style.display = 'none';
-        document.getElementById(id).style.display = 'block';
-    }
+    async function runUltraAction(type) {
+        const tk = document.getElementById('tk-input').value;
+        if(!tk) return alert("TOKEN EMPTY!");
 
-    function goHome() {
-        document.querySelectorAll('.screen, #result-view, #loading').forEach(s => s.style.display = 'none');
-        document.getElementById('menu-screen').style.display = 'grid';
-    }
-
-    /* TERA LOGIC WITH BYPASS RULES */
-    async function runAction(type) {
-        const val = type === 'uid' ? document.getElementById('uid-input').value : document.getElementById('tk-input').value;
-        if(!val) return;
-
-        document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
         document.getElementById('loading').style.display = 'block';
+        document.getElementById('result-area').style.display = 'none';
 
         try {
-            // Rule Based URLs (Jo tere _redirects mein hain)
-            let url = (type === 'uid') ? `/ff-info/info?uid=${val}` : `/api/game/account_security/bind:get_bind_info?app_id=100067&access_token=${val}`;
-            
+            // Hum yahan redirect ka use karenge taaki Garena block na kare
+            let url = (type === 'scan') 
+                ? `/api/game/account_security/bind:get_bind_info?app_id=100067&access_token=${tk}`
+                : `/api/game/account_security/bind:cancel_request?app_id=100067&access_token=${tk}`;
+
             const res = await fetch(url);
             const data = await res.json();
-            
-            let html = "";
-            if(type === 'uid') {
-                html = `
-                    <div class="data-row"><span class="data-label">PLAYER</span><span class="data-val">${data.nickname || 'Unknown'}</span></div>
-                    <div class="data-row"><span class="data-label">LEVEL</span><span class="data-val">${data.level || '0'}</span></div>
-                    <div class="data-row"><span class="data-label">REGION</span><span class="data-val">${data.region || '??'}</span></div>
-                    <div style="margin-top:10px; color:var(--cyan); font-size:10px; text-align:center;">INVENTORY BYPASS ACTIVE [✓]</div>
-                `;
-            } else {
-                const current = data.email || "None";
-                const pending = data.email_to_be_bind || data.email_to_be || null;
-                const timer = data.request_exec_countdown || 0;
-                html = `<div class="data-row"><span class="data-label">LINKED</span><span class="data-val">${current}</span></div>`;
-                if(pending) {
-                    html += `<div class="data-row" style="color:var(--cyan)"><span class="data-label">PENDING</span><span class="data-val">${pending}</span></div>
-                             <div class="data-row" style="color:var(--red)"><span class="data-label">TIMER</span><span class="data-val">${timer}s</span></div>`;
-                }
-            }
-            showResult(html);
-        } catch (err) {
-            alert("Check _redirects file!");
-            goHome();
-        }
-    }
 
-    function showResult(html) {
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('res-content').innerHTML = html;
-        document.getElementById('result-view').style.display = 'block';
+            // Populate JSON structure
+            document.getElementById('out-email').innerText = `"${data.email || 'None'}"`;
+            
+            const pending = data.email_to_be_bind || data.email_to_be || "null";
+            document.getElementById('out-pending').innerText = pending === "null" ? "null" : `"${pending}"`;
+            
+            document.getElementById('out-timer').innerText = data.request_exec_countdown || "00";
+            document.getElementById('out-auth').innerText = `"${data.error_message || 'SUCCESS'}"`;
+            
+            // Security Check
+            const isSecure = pending === "null";
+            document.getElementById('out-secure').innerText = isSecure;
+            document.getElementById('status-tag').innerText = isSecure ? "[SECURE]" : "[DANGER]";
+            document.getElementById('status-tag').style.color = isSecure ? "var(--green)" : "var(--red)";
+
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('result-area').style.display = 'block';
+            }, 800);
+
+        } catch (err) {
+            alert("Connection Error! Check _redirects.");
+            document.getElementById('loading').style.display = 'none';
+        }
     }
 </script>
 </body>
