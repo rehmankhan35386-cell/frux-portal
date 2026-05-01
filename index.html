@@ -3,144 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FRUX | ULTRA MAX TERMINAL</title>
+    <title>FRUX | CORE</title>
     <style>
         :root {
-            --bg: #010409;
-            --cyan: #00f3ff;
-            --purple: #bc13fe;
-            --red: #ff003c;
-            --green: #00ff9d;
-            --glass: rgba(15, 23, 42, 0.9);
+            --bg-deep: #0a0a0c;
+            --panel: #121214;
+            --border: #2a2a2e;
+            --accent: #3b82f6; /* Subtle Blue */
+            --text-main: #e4e4e7;
+            --text-dim: #71717a;
+            --danger: #ef4444;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Consolas', 'Courier New', monospace; }
-        
-        body { background-color: var(--bg); color: #fff; min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
+        body { background-color: var(--bg-deep); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; align-items: center; }
 
-        /* ULTRA BACKGROUND */
-        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; }
+        /* Smooth Star Background */
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; opacity: 0.4; }
 
-        .main-frame {
+        .container {
             width: 100%;
-            max-width: 460px;
-            padding: 30px;
-            background: var(--glass);
-            border: 1px solid rgba(188, 19, 254, 0.4);
-            border-radius: 24px;
-            backdrop-filter: blur(25px);
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(188, 19, 254, 0.1);
-            z-index: 10;
-        }
-
-        .logo-text {
-            font-size: 55px;
-            font-weight: 900;
-            text-align: center;
-            background: linear-gradient(to bottom, var(--cyan), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(0, 243, 255, 0.4));
-            letter-spacing: 8px;
-            margin-bottom: 30px;
-        }
-
-        /* INPUT AREA */
-        .ultra-input {
-            width: 100%;
-            padding: 18px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid var(--purple);
+            max-width: 480px;
+            background: var(--panel);
+            border: 1px solid var(--border);
             border-radius: 12px;
-            color: var(--cyan);
+            padding: 40px 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .header { margin-bottom: 35px; text-align: left; border-left: 3px solid var(--accent); padding-left: 15px; }
+        .header h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+        .header p { font-size: 12px; color: var(--text-dim); text-transform: uppercase; margin-top: 4px; }
+
+        .input-group { margin-bottom: 25px; }
+        .input-label { display: block; font-size: 11px; color: var(--text-dim); margin-bottom: 8px; text-transform: uppercase; font-weight: 600; }
+        
+        .elite-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #18181b;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: #fff;
             font-size: 14px;
             outline: none;
-            text-align: center;
-            margin-bottom: 20px;
-            transition: 0.3s;
+            transition: all 0.2s;
         }
-        .ultra-input:focus { border-color: var(--cyan); box-shadow: 0 0 15px rgba(0, 243, 255, 0.2); }
+        .elite-input:focus { border-color: var(--accent); background: #1c1c21; }
 
-        /* BUTTONS */
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .neon-btn {
-            padding: 16px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 900;
+        .actions { display: grid; grid-template-columns: 1.5fr 1fr; gap: 12px; }
+        .btn {
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
             cursor: pointer;
-            text-transform: uppercase;
-            transition: 0.3s;
+            transition: 0.2s;
+            border: 1px solid transparent;
         }
-        .btn-scan { background: var(--purple); color: #fff; box-shadow: 0 0 15px rgba(188, 19, 254, 0.4); }
-        .btn-cancel { background: var(--red); color: #fff; box-shadow: 0 0 15px rgba(255, 0, 60, 0.4); }
-        .neon-btn:hover { transform: translateY(-2px); filter: brightness(1.2); }
+        .btn-main { background: var(--accent); color: #fff; }
+        .btn-cancel { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
 
-        /* JSON OUTPUT BOX - AS REQUESTED */
-        #result-area { display: none; margin-top: 30px; animation: slideUp 0.5s ease; }
+        /* RAW JSON LOG */
+        #output-section { display: none; margin-top: 35px; animation: fadeIn 0.4s ease forwards; }
+        .log-label { font-size: 10px; color: var(--text-dim); margin-bottom: 10px; display: block; }
         
-        .terminal-header {
-            font-size: 10px;
-            color: var(--muted);
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 5px;
-        }
-
-        .raw-json-box {
+        .json-log {
             background: #000;
+            border: 1px solid var(--border);
+            border-radius: 8px;
             padding: 20px;
-            border-radius: 15px;
-            border: 1px solid var(--purple);
+            font-family: 'SFMono-Regular', Consolas, monospace;
             font-size: 12px;
-            line-height: 1.5;
+            line-height: 1.6;
             color: #d1d5db;
-            text-align: left;
-            position: relative;
-            box-shadow: inset 0 0 10px rgba(188, 19, 254, 0.2);
         }
+        .j-key { color: #94a3b8; }
+        .j-str { color: #60a5fa; }
+        .j-num { color: #fbbf24; }
+        .j-status { padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 10px; }
 
-        /* JSON COLORING */
-        .j-key { color: var(--cyan); }
-        .j-val { color: #d2a8ff; }
-        .j-num { color: #ffa657; font-weight: bold; }
-        .j-bool { color: var(--red); font-weight: bold; }
-
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div id="particles-js"></div>
 
-<div class="main-frame">
-    <h1 class="logo-text">FRUX</h1>
-
-    <input type="text" id="tk-input" class="ultra-input" placeholder="PASTE ACCESS_TOKEN">
-
-    <div class="btn-grid">
-        <button class="neon-btn btn-scan" onclick="runUltraAction('scan')">Deep Scan</button>
-        <button class="neon-btn btn-cancel" onclick="runUltraAction('cancel')">Cancel</button>
+<div class="container">
+    <div class="header">
+        <h1>FRUX CORE</h1>
+        <p>Security Analysis Terminal</p>
     </div>
 
-    <div id="loading" style="display:none; margin-top: 25px; color: var(--cyan); text-align: center; font-size: 12px;">
-        [SYSTEM] SCANNING DATABASE...
+    <div class="input-group">
+        <label class="input-label">Authentication Token</label>
+        <input type="text" id="tk-input" class="elite-input" placeholder="Enter session token...">
     </div>
 
-    <div id="result-area">
-        <div class="terminal-header">
-            <span>DATABASE_OUTPUT_LOG</span>
-            <span id="status-tag" style="color: var(--green);">[STABLE]</span>
-        </div>
-        
-        <div class="raw-json-box">
+    <div class="actions">
+        <button class="btn btn-main" onclick="executeAction('scan')">Execute Scan</button>
+        <button class="btn btn-cancel" onclick="executeAction('cancel')">Cancel Request</button>
+    </div>
+
+    <div id="output-section">
+        <span class="log-label">System_Response_Log</span>
+        <div class="json-log">
             {<br>
-            &nbsp;&nbsp;<span class="j-key">"email"</span>: <span class="j-val" id="out-email">"..."</span>,<br>
-            &nbsp;&nbsp;<span class="j-key">"pending_request"</span>: <span class="j-val" id="out-pending">null</span>,<br>
-            &nbsp;&nbsp;<span class="j-key">"countdown_timer"</span>: <span class="j-num" id="out-timer">00</span>,<br>
-            &nbsp;&nbsp;<span class="j-key">"auth_status"</span>: <span class="j-val" id="out-auth">"READY"</span>,<br>
-            &nbsp;&nbsp;<span class="j-key">"is_secure"</span>: <span class="j-bool" id="out-secure">true</span><br>
+            &nbsp;&nbsp;<span class="j-key">"identity"</span>: <span class="j-str" id="o-email">"..."</span>,<br>
+            &nbsp;&nbsp;<span class="j-key">"request_pending"</span>: <span class="j-str" id="o-pending">null</span>,<br>
+            &nbsp;&nbsp;<span class="j-key">"exec_countdown"</span>: <span class="j-num" id="o-timer">00</span>,<br>
+            &nbsp;&nbsp;<span class="j-key">"api_status"</span>: <span class="j-str" id="o-msg">"IDLE"</span>,<br>
+            &nbsp;&nbsp;<span class="j-key">"security_flag"</span>: <span id="o-flag">"--"</span><br>
             }
         </div>
     </div>
@@ -150,23 +125,21 @@
 <script>
     particlesJS("particles-js", {
         "particles": {
-            "number": { "value": 100 },
+            "number": { "value": 60 },
             "color": { "value": "#ffffff" },
-            "size": { "value": 1.5 },
-            "line_linked": { "enable": true, "distance": 120, "color": "#bc13fe", "opacity": 0.2 },
-            "move": { "enable": true, "speed": 1 }
+            "opacity": { "value": 0.2 },
+            "size": { "value": 1 },
+            "move": { "speed": 0.5 }
         }
     });
 
-    async function runUltraAction(type) {
+    async function executeAction(type) {
         const tk = document.getElementById('tk-input').value;
-        if(!tk) return alert("TOKEN EMPTY!");
+        if(!tk) return;
 
-        document.getElementById('loading').style.display = 'block';
-        document.getElementById('result-area').style.display = 'none';
+        document.getElementById('output-section').style.display = 'none';
 
         try {
-            // Hum yahan redirect ka use karenge taaki Garena block na kare
             let url = (type === 'scan') 
                 ? `/api/game/account_security/bind:get_bind_info?app_id=100067&access_token=${tk}`
                 : `/api/game/account_security/bind:cancel_request?app_id=100067&access_token=${tk}`;
@@ -174,29 +147,24 @@
             const res = await fetch(url);
             const data = await res.json();
 
-            // Populate JSON structure
-            document.getElementById('out-email').innerText = `"${data.email || 'None'}"`;
-            
+            // Populate Elite JSON View
+            document.getElementById('o-email').innerText = `"${data.email || 'not_found'}"`;
             const pending = data.email_to_be_bind || data.email_to_be || "null";
-            document.getElementById('out-pending').innerText = pending === "null" ? "null" : `"${pending}"`;
+            document.getElementById('o-pending').innerText = pending === "null" ? "null" : `"${pending}"`;
+            document.getElementById('o-timer').innerText = data.request_exec_countdown || "0";
+            document.getElementById('o-msg').innerText = `"${data.error_message || 'SUCCESS'}"`;
             
-            document.getElementById('out-timer').innerText = data.request_exec_countdown || "00";
-            document.getElementById('out-auth').innerText = `"${data.error_message || 'SUCCESS'}"`;
-            
-            // Security Check
-            const isSecure = pending === "null";
-            document.getElementById('out-secure').innerText = isSecure;
-            document.getElementById('status-tag').innerText = isSecure ? "[SECURE]" : "[DANGER]";
-            document.getElementById('status-tag').style.color = isSecure ? "var(--green)" : "var(--red)";
+            const flag = document.getElementById('o-flag');
+            if(pending === "null") {
+                flag.innerHTML = '<span class="j-status" style="background:#064e3b; color:#34d399;">STABLE</span>';
+            } else {
+                flag.innerHTML = '<span class="j-status" style="background:#450a0a; color:#f87171;">VULNERABLE</span>';
+            }
 
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('result-area').style.display = 'block';
-            }, 800);
+            document.getElementById('output-section').style.display = 'block';
 
         } catch (err) {
-            alert("Connection Error! Check _redirects.");
-            document.getElementById('loading').style.display = 'none';
+            alert("Connection Failed.");
         }
     }
 </script>
