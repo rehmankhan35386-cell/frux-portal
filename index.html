@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRUX | CORE PORTAL</title>
+    <style>
+        :root {
+            --bg: #020617;
+            --card: #0f172a;
+            --cyan: #22d3ee;
+            --purple: #a855f7;
+            --green: #10b981;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow-x: hidden; }
+
+        .viewport { width: 90%; max-width: 400px; text-align: center; }
+        
+        .logo { font-size: 45px; font-weight: 900; color: var(--cyan); text-shadow: 0 0 20px rgba(34, 211, 238, 0.4); margin-bottom: 5px; }
+        .tagline { font-size: 10px; color: var(--muted); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 40px; }
+
+        /* --- HUB SCREEN --- */
+        #hub-screen { display: grid; gap: 20px; }
+        
+        .choice-card {
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: left;
+            border-left: 5px solid var(--cyan);
+        }
+        
+        .choice-card:hover { transform: scale(1.02); border-color: var(--cyan); }
+        .choice-card h3 { color: var(--cyan); margin-bottom: 5px; font-size: 20px; }
+        .choice-card p { font-size: 12px; color: var(--muted); }
+
+        /* --- TOOL SCREENS --- */
+        .tool-screen { display: none; width: 100%; }
+        .input-box { width: 100%; padding: 18px; background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; color: var(--text); margin-bottom: 20px; font-size: 16px; outline: none; }
+        .input-box:focus { border-color: var(--cyan); }
+        
+        .primary-btn { width: 100%; padding: 18px; background: var(--cyan); border: none; border-radius: 15px; color: var(--bg); font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .primary-btn:hover { box-shadow: 0 0 20px rgba(34, 211, 238, 0.4); }
+
+        /* --- RESULT CARD --- */
+        .result-container { background: var(--card); border-radius: 20px; padding: 20px; margin-top: 25px; text-align: left; border: 1px solid rgba(34, 211, 238, 0.2); display: none; }
+        .res-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .res-label { color: var(--muted); font-size: 13px; }
+        .res-val { color: var(--text); font-weight: bold; }
+        
+        .status-tag { color: var(--green); font-size: 11px; border: 1px solid var(--green); padding: 2px 8px; border-radius: 10px; text-transform: uppercase; }
+
+        /* --- ANIMATION --- */
+        #loading-view { display: none; margin-top: 30px; }
+        .spinner { width: 50px; height: 50px; border: 3px solid rgba(34, 211, 238, 0.1); border-left-color: var(--cyan); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<div class="viewport">
+    <div class="logo">FRUX</div>
+    <div class="tagline">Multipurpose Hub</div>
+
+    <div id="hub-screen">
+        <div class="choice-card" onclick="showTool('uid-tool')">
+            <h3>UID Info Checker</h3>
+            <p>Fetch player name, level, and account status.</p>
+        </div>
+        <div class="choice-card" style="border-left-color: var(--purple);" onclick="showTool('deep-scan-tool')">
+            <h3>Deep Scan Tool</h3>
+            <p>Check pending bind requests and account timers.</p>
+        </div>
+    </div>
+
+    <div id="uid-tool" class="tool-screen">
+        <input type="number" id="uid-input" class="input-box" placeholder="Enter Player UID...">
+        <button class="primary-btn" onclick="processAction('uid')">Fetch Info</button>
+    </div>
+
+    <div id="deep-scan-tool" class="tool-screen">
+        <input type="text" id="token-input" class="input-box" placeholder="Paste Access Token...">
+        <button class="primary-btn" style="background: var(--purple); color: white;" onclick="processAction('scan')">Analyze Token</button>
+    </div>
+
+    <div id="loading-view">
+        <div class="spinner"></div>
+        <p style="margin-top: 15px; color: var(--cyan); font-size: 12px; letter-spacing: 2px;">COMMUNICATING WITH SERVER...</p>
+    </div>
+
+    <div id="result-view" class="result-container">
+        <div id="uid-results" style="display:none;">
+            <div class="res-row"><span class="res-label">Player Name</span><span class="res-val" id="val-name">FRUX_OFFICIAL</span></div>
+            <div class="res-row"><span class="res-label">Account Level</span><span class="res-val" id="val-level">72</span></div>
+            <div class="res-row"><span class="res-label">Region</span><span class="res-val">India</span></div>
+            <div class="res-row"><span class="res-label">Status</span><span class="status-tag">Protected</span></div>
+        </div>
+        
+        <div id="scan-results" style="display:none;">
+            <div class="res-row"><span class="res-label">Linked Email</span><span class="res-val">hussain.xxx@gmail.com</span></div>
+            <div class="res-row" style="color: var(--cyan);"><span class="res-label">Pending Bind</span><span class="res-val">frux.bind@new.com</span></div>
+            <div class="res-row"><span class="res-label">Timer Remaining</span><span class="res-val" style="color: var(--cyan);">145s</span></div>
+        </div>
+
+        <button class="primary-btn" style="background:transparent; border:1px solid var(--muted); color:var(--muted); margin-top:20px; font-size:12px;" onclick="resetHub()">Back to Menu</button>
+    </div>
+</div>
+
+<script>
+    function showTool(toolId) {
+        document.getElementById('hub-screen').style.display = 'none';
+        document.getElementById(toolId).style.display = 'block';
+    }
+
+    function resetHub() {
+        document.querySelectorAll('.tool-screen, .result-container, #uid-results, #scan-results').forEach(el => el.style.display = 'none');
+        document.getElementById('hub-screen').style.display = 'grid';
+        document.querySelectorAll('.input-box').forEach(i => i.value = '');
+    }
+
+    function processAction(type) {
+        let val = type === 'uid' ? document.getElementById('uid-input').value : document.getElementById('token-input').value;
+        if(!val) return alert("Pehle data toh daalo!");
+
+        document.querySelectorAll('.tool-screen').forEach(el => el.style.display = 'none');
+        document.getElementById('loading-view').style.display = 'block';
+
+        setTimeout(() => {
+            document.getElementById('loading-view').style.display = 'none';
+            document.getElementById('result-view').style.display = 'block';
+            
+            if(type === 'uid') {
+                document.getElementById('uid-results').style.display = 'block';
+                document.getElementById('val-name').innerText = "PLAYER_" + val.substring(0,4);
+            } else {
+                document.getElementById('scan-results').style.display = 'block';
+            }
+        }, 2000);
+    }
+</script>
+
+</body>
+</html>
