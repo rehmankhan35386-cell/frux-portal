@@ -3,169 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FRUX | CORE</title>
+    <title>FRUX | YT</title>
     <style>
         :root {
-            --bg-deep: #0a0a0c;
-            --panel: #121214;
-            --border: #2a2a2e;
-            --accent: #3b82f6; /* Subtle Blue */
-            --text-main: #e4e4e7;
-            --text-dim: #71717a;
-            --danger: #ef4444;
+            --bg: #0d0d0d;
+            --panel: #161616;
+            --accent: #3b82f6;
+            --border: #262626;
+            --danger: #dc2626;
+            --success: #16a34a;
+            --text: #e5e7eb;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
-        body { background-color: var(--bg-deep); color: var(--text-main); min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'JetBrains Mono', monospace; }
+        body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
 
-        /* Smooth Star Background */
-        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; opacity: 0.4; }
+        #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; opacity: 0.2; }
 
-        .container {
+        .terminal-container {
             width: 100%;
-            max-width: 480px;
+            max-width: 500px;
             background: var(--panel);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 40px 30px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
         }
 
-        .header { margin-bottom: 35px; text-align: left; border-left: 3px solid var(--accent); padding-left: 15px; }
-        .header h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
-        .header p { font-size: 12px; color: var(--text-dim); text-transform: uppercase; margin-top: 4px; }
-
-        .input-group { margin-bottom: 25px; }
-        .input-label { display: block; font-size: 11px; color: var(--text-dim); margin-bottom: 8px; text-transform: uppercase; font-weight: 600; }
+        .term-header { border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 25px; }
+        .brand-box h1 { font-size: 24px; font-weight: 900; letter-spacing: 5px; color: #fff; text-transform: uppercase; }
+        .brand-box p { font-size: 8px; color: #52525b; letter-spacing: 2px; margin-top: 5px; }
         
-        .elite-input {
+        .token-input {
             width: 100%;
-            padding: 14px 16px;
-            background: #18181b;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-            transition: all 0.2s;
-        }
-        .elite-input:focus { border-color: var(--accent); background: #1c1c21; }
-
-        .actions { display: grid; grid-template-columns: 1.5fr 1fr; gap: 12px; }
-        .btn {
-            padding: 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            border: 1px solid transparent;
-        }
-        .btn-main { background: var(--accent); color: #fff; }
-        .btn-cancel { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
-        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-
-        /* RAW JSON LOG */
-        #output-section { display: none; margin-top: 35px; animation: fadeIn 0.4s ease forwards; }
-        .log-label { font-size: 10px; color: var(--text-dim); margin-bottom: 10px; display: block; }
-        
-        .json-log {
+            padding: 15px;
             background: #000;
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 20px;
-            font-family: 'SFMono-Regular', Consolas, monospace;
-            font-size: 12px;
-            line-height: 1.6;
-            color: #d1d5db;
+            color: var(--accent);
+            font-size: 13px;
+            outline: none;
+            margin-bottom: 20px;
         }
-        .j-key { color: #94a3b8; }
-        .j-str { color: #60a5fa; }
-        .j-num { color: #fbbf24; }
-        .j-status { padding: 2px 6px; border-radius: 4px; font-weight: bold; font-size: 10px; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .action-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn {
+            padding: 15px;
+            border: 1px solid var(--border);
+            background: #1f1f1f;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+        .btn:active { transform: scale(0.98); }
+        .btn-scan:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-cancel:hover { border-color: var(--danger); color: var(--danger); }
+
+        #data-display { display: none; margin-top: 25px; animation: fadeIn 0.3s ease; }
+        .box { background: #0a0a0a; border: 1px solid var(--border); padding: 15px; margin-bottom: 10px; border-left: 3px solid var(--border); }
+        .box-label { font-size: 8px; color: #52525b; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        .box-value { font-size: 13px; word-break: break-all; }
+
+        /* JSON BOX WITH COPY BUTTON */
+        .log-container { position: relative; margin-top: 10px; }
+        .log-wrap { background: #000; padding: 15px; border: 1px solid var(--border); font-size: 11px; color: #71717a; line-height: 1.6; white-space: pre-wrap; }
+        
+        .copy-btn {
+            position: absolute; top: 10px; right: 10px;
+            background: var(--accent); color: #fff;
+            border: none; padding: 5px 12px; font-size: 10px;
+            border-radius: 2px; cursor: pointer; text-transform: uppercase;
+            font-weight: bold; z-index: 10;
+        }
+        .copy-btn:hover { filter: brightness(1.2); }
+        .copy-btn:active { transform: scale(0.95); }
+
+        .j-key { color: var(--accent); }
+        .j-val { color: #a1a1aa; }
+        .j-danger { color: var(--danger); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div id="particles-js"></div>
 
-<div class="container">
-    <div class="header">
-        <h1>FRUX CORE</h1>
-        <p>Security Analysis Terminal</p>
+<div class="terminal-container">
+    <div class="term-header">
+        <div class="brand-box">
+            <h1>FRUX YT</h1>
+            <p>ADVANCED SESSION DECODER</p>
+        </div>
     </div>
 
-    <div class="input-group">
-        <label class="input-label">Authentication Token</label>
-        <input type="text" id="tk-input" class="elite-input" placeholder="Enter session token...">
+    <input type="text" id="tk-input" class="token-input" placeholder="PASTE_TOKEN_HERE">
+
+    <div class="action-row">
+        <button class="btn btn-scan" onclick="run('scan')">Execute Scan</button>
+        <button class="btn btn-cancel" onclick="run('cancel')">Terminate Req</button>
     </div>
 
-    <div class="actions">
-        <button class="btn btn-main" onclick="executeAction('scan')">Execute Scan</button>
-        <button class="btn btn-cancel" onclick="executeAction('cancel')">Cancel Request</button>
-    </div>
+    <div id="data-display">
+        <div class="box" style="border-left-color: var(--accent);">
+            <span class="box-label">Active_Binding</span>
+            <span class="box-value" id="v-linked">...</span>
+        </div>
+        <div class="box" id="p-box">
+            <span class="box-label">Pending_Request</span>
+            <span class="box-value" id="v-pending">...</span>
+        </div>
 
-    <div id="output-section">
-        <span class="log-label">System_Response_Log</span>
-        <div class="json-log">
-            {<br>
-            &nbsp;&nbsp;<span class="j-key">"identity"</span>: <span class="j-str" id="o-email">"..."</span>,<br>
-            &nbsp;&nbsp;<span class="j-key">"request_pending"</span>: <span class="j-str" id="o-pending">null</span>,<br>
-            &nbsp;&nbsp;<span class="j-key">"exec_countdown"</span>: <span class="j-num" id="o-timer">00</span>,<br>
-            &nbsp;&nbsp;<span class="j-key">"api_status"</span>: <span class="j-str" id="o-msg">"IDLE"</span>,<br>
-            &nbsp;&nbsp;<span class="j-key">"security_flag"</span>: <span id="o-flag">"--"</span><br>
-            }
+        <div class="log-container">
+            <button class="copy-btn" id="copy-btn" onclick="copyJSON()">Copy Data</button>
+            <div class="log-wrap" id="json-raw">{
+  "<span class="j-key">email</span>": <span class="j-val" id="j-mail">"..."</span>,
+  "<span class="j-key">pending</span>": <span class="j-val" id="j-pending">null</span>,
+  "<span class="j-key">cancelled_target</span>": <span class="j-danger" id="j-cancelled">null</span>,
+  "<span class="j-key">countdown</span>": <span id="j-timer" style="color:#f59e0b">0</span>,
+  "<span class="j-key">status</span>": <span class="j-val" id="j-status">"IDLE"</span>
+}</div>
         </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-    particlesJS("particles-js", {
-        "particles": {
-            "number": { "value": 60 },
-            "color": { "value": "#ffffff" },
-            "opacity": { "value": 0.2 },
-            "size": { "value": 1 },
-            "move": { "speed": 0.5 }
-        }
-    });
+    particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "size": { "value": 1 }, "move": { "speed": 0.5 }, "opacity": { "value": 0.1 } } });
 
-    async function executeAction(type) {
+    let lastPending = "null";
+
+    async function run(mode) {
         const tk = document.getElementById('tk-input').value;
         if(!tk) return;
 
-        document.getElementById('output-section').style.display = 'none';
-
         try {
-            let url = (type === 'scan') 
-                ? `/api/game/account_security/bind:get_bind_info?app_id=100067&access_token=${tk}`
-                : `/api/game/account_security/bind:cancel_request?app_id=100067&access_token=${tk}`;
-
+            let url = `/api/game/account_security/bind:${mode === 'scan' ? 'get_bind_info' : 'cancel_request'}?app_id=100067&access_token=${tk}`;
             const res = await fetch(url);
             const data = await res.json();
 
-            // Populate Elite JSON View
-            document.getElementById('o-email').innerText = `"${data.email || 'not_found'}"`;
-            const pending = data.email_to_be_bind || data.email_to_be || "null";
-            document.getElementById('o-pending').innerText = pending === "null" ? "null" : `"${pending}"`;
-            document.getElementById('o-timer').innerText = data.request_exec_countdown || "0";
-            document.getElementById('o-msg').innerText = `"${data.error_message || 'SUCCESS'}"`;
-            
-            const flag = document.getElementById('o-flag');
-            if(pending === "null") {
-                flag.innerHTML = '<span class="j-status" style="background:#064e3b; color:#34d399;">STABLE</span>';
+            const mail = data.email || "not_found";
+            const pend = data.email_to_be_bind || data.email_to_be || "null";
+            const time = data.request_exec_countdown || 0;
+
+            document.getElementById('v-linked').innerText = mail;
+            document.getElementById('j-mail').innerText = `"${mail}"`;
+            document.getElementById('j-timer').innerText = time;
+            document.getElementById('j-status').innerText = `"${data.error_message || (mode === 'cancel' ? 'CANCEL_SENT' : 'SUCCESS')}"`;
+
+            if(mode === 'cancel') {
+                document.getElementById('j-cancelled').innerText = lastPending !== "null" ? `"${lastPending}"` : "null";
             } else {
-                flag.innerHTML = '<span class="j-status" style="background:#450a0a; color:#f87171;">VULNERABLE</span>';
+                lastPending = pend;
+                document.getElementById('j-cancelled').innerText = "null";
             }
 
-            document.getElementById('output-section').style.display = 'block';
+            const vPend = document.getElementById('v-pending');
+            const pBox = document.getElementById('p-box');
+            
+            if(pend !== "null") {
+                vPend.innerText = pend;
+                vPend.style.color = "var(--danger)";
+                pBox.style.borderLeftColor = "var(--danger)";
+                document.getElementById('j-pending').innerText = `"${pend}"`;
+            } else {
+                vPend.innerText = "CLEARED / SECURE";
+                vPend.style.color = "var(--success)";
+                pBox.style.borderLeftColor = "var(--success)";
+                document.getElementById('j-pending').innerText = "null";
+            }
 
-        } catch (err) {
-            alert("Connection Failed.");
-        }
+            document.getElementById('data-display').style.display = 'block';
+            if(mode === 'cancel') { alert("TERMINATION SIGNAL SENT!"); run('scan'); }
+
+        } catch (e) { alert("API ERROR"); }
+    }
+
+    function copyJSON() {
+        const mail = document.getElementById('j-mail').innerText;
+        const pending = document.getElementById('j-pending').innerText;
+        const cancelled = document.getElementById('j-cancelled').innerText;
+        const timer = document.getElementById('j-timer').innerText;
+        const status = document.getElementById('j-status').innerText;
+        
+        const raw = `{\n  "email": ${mail},\n  "pending": ${pending},\n  "cancelled_target": ${cancelled},\n  "countdown": ${timer},\n  "status": ${status}\n}`;
+        
+        navigator.clipboard.writeText(raw).then(() => {
+            const btn = document.getElementById('copy-btn');
+            btn.innerText = "COPIED!";
+            btn.style.background = "var(--success)";
+            setTimeout(() => {
+                btn.innerText = "COPY DATA";
+                btn.style.background = "var(--accent)";
+            }, 2000);
+        });
     }
 </script>
 </body>
