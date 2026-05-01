@@ -11,7 +11,6 @@
             --cyan: #22d3ee;
             --purple: #a855f7;
             --green: #10b981;
-            --red: #ef4444;
             --text: #f8fafc;
             --muted: #94a3b8;
         }
@@ -32,20 +31,23 @@
         .card p { font-size: 13px; color: var(--muted); line-height: 1.4; }
 
         .screen { display: none; width: 100%; animation: slideIn 0.4s ease; }
-        .input-box { width: 100%; padding: 18px; background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; color: #fff; font-size: 16px; margin-bottom: 10px; outline: none; }
+        .input-box { width: 100%; padding: 18px; background: var(--card); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; color: #fff; font-size: 16px; margin-bottom: 15px; outline: none; }
         .input-box:focus { border-color: var(--cyan); }
         
-        .btn { width: 100%; padding: 16px; border: none; border-radius: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.3s; font-size: 13px; margin-bottom: 10px; }
+        .btn { width: 100%; padding: 18px; border: none; border-radius: 15px; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.3s; font-size: 14px; margin-bottom: 10px; }
         .btn-primary { background: var(--cyan); color: var(--bg); }
         .btn-purple { background: var(--purple); color: #fff; }
-        .btn-red { background: var(--red); color: #fff; }
-        .btn-outline { background: transparent; border: 1px solid var(--muted); color: var(--muted); margin-top: 10px; }
+        .btn-outline { background: transparent; border: 1px solid var(--muted); color: var(--muted); margin-top: 20px; }
 
         #loading { display: none; margin-top: 20px; color: var(--cyan); font-weight: bold; text-shadow: 0 0 10px var(--cyan); }
-        .result-box { display: none; background: var(--card); border-radius: 20px; padding: 25px; text-align: left; border-left: 5px solid var(--purple); margin-top: 20px; backdrop-filter: blur(15px); }
-        .data-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .result-box { display: none; background: var(--card); border-radius: 20px; padding: 25px; text-align: left; border-left: 5px solid var(--purple); margin-top: 20px; backdrop-filter: blur(15px); max-height: 400px; overflow-y: auto; }
+        .data-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .data-label { color: var(--muted); font-size: 11px; text-transform: uppercase; }
-        .data-val { font-weight: bold; color: #fff; word-break: break-all; font-size: 13px; }
+        .data-val { font-weight: bold; color: #fff; word-break: break-all; }
+
+        /* SCROLLBAR FOR RESULTS */
+        .result-box::-webkit-scrollbar { width: 5px; }
+        .result-box::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 10px; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
@@ -61,36 +63,32 @@
 
     <div id="menu-screen">
         <div class="card" onclick="openScreen('uid-screen')">
-            <h3>UID Checker</h3>
-            <p>Get player details and info instantly.</p>
+            <h3>Full Inventory Check</h3>
+            <p>Get IGN, Level, Clothes & Item details (No Ads).</p>
         </div>
         <div class="card" style="border-left-color: var(--purple);" onclick="openScreen('scan-screen')">
             <h3>Token Deep Scan</h3>
-            <p>Full analysis, Bind Email & Cancel Request.</p>
+            <p>Analyze Garena Bind status, Email change & Timers.</p>
         </div>
     </div>
 
     <div id="uid-screen" class="screen">
         <input type="number" id="uid-input" class="input-box" placeholder="Enter Game UID...">
-        <button class="btn btn-primary" onclick="runAction('uid')">Fetch Profile</button>
-        <button class="btn btn-outline" onclick="goHome()">Back</button>
+        <button class="btn btn-primary" onclick="runAction('uid')">Bypass & Fetch Info</button>
+        <button class="btn btn-outline" onclick="goHome()">Back to Menu</button>
     </div>
 
     <div id="scan-screen" class="screen">
         <input type="text" id="tk-input" class="input-box" placeholder="Paste Access Token...">
-        <button class="btn btn-purple" onclick="runAction('scan')">Full Deep Scan</button>
-        <hr style="opacity:0.1; margin: 15px 0;">
-        <input type="email" id="email-input" class="input-box" placeholder="New Email (Optional)">
-        <button class="btn btn-primary" onclick="runAction('bind')">Request Bind</button>
-        <button class="btn btn-red" onclick="runAction('cancel')">Cancel Pending Request</button>
+        <button class="btn btn-purple" onclick="runAction('scan')">Deep Scan Token</button>
         <button class="btn btn-outline" onclick="goHome()">Back to Menu</button>
     </div>
 
-    <div id="loading">FRUX BYPASSING SECURITY...</div>
+    <div id="loading">BYPASSING SECURITY...</div>
 
     <div id="result-view" class="result-box">
         <div id="res-content"></div>
-        <button class="btn btn-outline" onclick="goHome()">New Scan</button>
+        <button class="btn btn-outline" onclick="goHome()" style="width:100%">New Scan</button>
     </div>
 </div>
 
@@ -98,7 +96,7 @@
 <script>
     particlesJS("particles-js", {
       "particles": {
-        "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+        "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
         "color": { "value": "#ffffff" },
         "opacity": { "value": 0.5, "random": true },
         "size": { "value": 2, "random": true },
@@ -117,59 +115,45 @@
     }
 
     async function runAction(type) {
-        const tk = document.getElementById('tk-input').value;
-        const uid = document.getElementById('uid-input').value;
-        const email = document.getElementById('email-input').value;
-
-        if((type === 'uid' && !uid) || (type !== 'uid' && !tk)) return alert("Input missing!");
+        const val = type === 'uid' ? document.getElementById('uid-input').value : document.getElementById('tk-input').value;
+        if(!val) return alert("Input dalo bhai!");
 
         document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
         document.getElementById('loading').style.display = 'block';
 
-        let url, options;
-        
-        // Setup API URLs matching your Python script logic
-        if(type === 'uid') {
-            url = `/ff-api/info?uid=${uid}`;
-            options = { method: 'GET' };
-        } else if(type === 'scan') {
-            url = `/api/game/account_security/bind:get_bind_info?app_id=100067&access_token=${tk}`;
-            options = { method: 'GET' };
-        } else if(type === 'bind') {
-            if(!email) return alert("Email dalo!");
-            url = `/api/game/account_security/bind:request?app_id=100067&access_token=${tk}&email=${email}`;
-            options = { method: 'POST' };
-        } else if(type === 'cancel') {
-            url = `/api/game/account_security/bind:cancel_request?app_id=100067&access_token=${tk}`;
-            options = { method: 'POST' };
-        }
-
         try {
-            const res = await fetch(url, options);
+            let url = type === 'uid' ? `/ff-api/info?uid=${val}` : `/garena-api/game/account_security/bind:get_bind_info?app_id=100067&access_token=${val}`;
+            
+            const res = await fetch(url);
             const data = await res.json();
             
             let html = "";
             if(type === 'uid') {
-                html = `<div class="data-row"><span class="data-label">IGN</span><span class="data-val">${data.nickname || 'Err'}</span></div>
-                        <div class="data-row"><span class="data-label">Level</span><span class="data-val">${data.level || '??'}</span></div>
-                        <div class="data-row"><span class="data-label">Region</span><span class="data-val">${data.region || '??'}</span></div>`;
+                html = `
+                    <div class="data-row"><span class="data-label">IGN</span><span class="data-val">${data.nickname || 'Unknown'}</span></div>
+                    <div class="data-row"><span class="data-label">Level</span><span class="data-val">${data.level || '0'}</span></div>
+                    <div class="data-row"><span class="data-label">Region</span><span class="data-val">${data.region || '??'}</span></div>
+                    <div class="data-row"><span class="data-label">Likes</span><span class="data-val">${data.likes || '0'}</span></div>
+                    <div style="margin-top:15px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;">
+                        <p style="font-size:10px; color:var(--cyan)">EQUIPPED ITEMS</p>
+                        <div style="font-size:11px; color:var(--muted); margin-top:5px;">Check console for full list...</div>
+                    </div>
+                `;
             } else {
-                // For scan/bind/cancel
-                const current = data.email || "None";
+                const current = data.email || "No Email";
                 const pending = data.email_to_be_bind || data.email_to_be || null;
                 const timer = data.request_exec_countdown || 0;
-                const msg = data.error_message || "Success";
-
-                html = `<div class="data-row"><span class="data-label">Linked Email</span><span class="data-val">${current}</span></div>`;
+                html = `<div class="data-row"><span class="data-label">Current</span><span class="data-val">${current}</span></div>`;
                 if(pending) {
-                    html += `<div class="data-row"><span class="data-label" style="color:var(--cyan)">Pending Bind</span><span class="data-val" style="color:var(--cyan)">${pending}</span></div>
-                             <div class="data-row"><span class="data-label" style="color:var(--red)">Execution</span><span class="data-val" style="color:var(--red)">${timer}s</span></div>`;
+                    html += `<div class="data-row" style="color:var(--cyan)"><span class="data-label">Pending</span><span class="data-val">${pending}</span></div>
+                             <div class="data-row" style="color:var(--red)"><span class="data-label">Timer</span><span class="data-val">${timer}s</span></div>`;
+                } else {
+                    html += `<div class="data-row"><span class="data-label">Status</span><span class="data-val" style="color:var(--green)">SECURE</span></div>`;
                 }
-                html += `<div class="data-row"><span class="data-label">Result</span><span class="data-val">${msg}</span></div>`;
             }
             showResult(html);
         } catch (err) {
-            alert("Action Failed! Check Token/API.");
+            alert("Error! _redirects file check karo GitHub par.");
             goHome();
         }
     }
