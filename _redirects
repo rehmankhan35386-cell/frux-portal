@@ -1,1 +1,5 @@
+# Pehla: Garena Connection (Token Scan/Bind ke liye)
 /api/* https://100067.connect.garena.com/:splat  200
+
+# Dusra: Item Info & Inventory (Kapde/Skins ke liye)
+/ff-info/* https://freefireinfo.in/api/v1/:splat  200
